@@ -1,0 +1,149 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 38,
+  "margin-bottom": 0,
+  "margin-top": 10,
+  "margin-left": 10,
+  "margin-right": 10,
+  "custom/stickynote": {
+    "exec": "~/.config/waybar/scripts/stickynote.sh",
+    "interval": 5,
+    "return-type": "json",
+    "on-click": "bash ~/.config/waybar/scripts/stickynote_toggle.sh"
+  },
+  "modules-left": [
+    "sway/workspaces",
+    "hyprland/workspaces",
+    "sway/mode",
+    "cpu",
+    "memory",
+    "mpd"
+  ],
+  "modules-center": [
+    "custom/stickynote"
+  ],
+  "modules-right": [
+    "tray",
+    "idle_inhibitor",
+    "battery",
+    "clock",
+    "custom/controlcenter"
+  ],
+  "custom/controlcenter": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "bash ~/.config/waybar/scripts/control_center_toggle.sh"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "hyprland/workspaces": {
+    "sort-by-name": true,
+    "on-click": "activate"
+  },
+  "hyprland/window": {
+    "max-length": 200,
+    "separate-outputs": true
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 6
+  },
+  "clock": {
+    "locale": "C",
+    "format": " {:%I:%M %p}",
+    "format-alt": " {:%a,%b %d}"
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false,
+    "on-click": "kitty -e htop"
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {used:0.2f}GB",
+    "max-length": 10,
+    "tooltip": false,
+    "warning": 70,
+    "critical": 90
+  },
+  "network": {
+    "interval": 2,
+    "format-wifi": " {signalStrength}%",
+    "format-ethernet": "",
+    "format-linked": " {ipaddr}",
+    "format-disconnected": " Disconnected",
+    "format-disabled": "",
+    "tooltip": false,
+    "max-length": 20,
+    "min-length": 6,
+    "format-alt": "{essid}"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "mpd": {
+    "format": "{stateIcon} {artist} - {title}",
+    "format-disconnected": "🎶",
+    "format-stopped": "♪",
+    "interval": 10,
+    "consume-icons": {
+      "on": " "
+    },
+    "random-icons": {
+      "off": "<span color=\"#f53c3c\"></span> ",
+      "on": " "
+    },
+    "repeat-icons": {
+      "on": " "
+    },
+    "single-icons": {
+      "on": "1 "
+    },
+    "state-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)",
+    "max-length": 35
+  },
+  "custom/recorder": {
+    "format": " Rec",
+    "format-disabled": " Off-air",
+    "return-type": "json",
+    "interval": 1,
+    "exec": "echo '{\"class\": \"recording\"}'",
+    "exec-if": "pgrep wf-recorder"
+  },
+  "custom/audiorec": {
+    "format": "♬ Rec",
+    "format-disabled": "♬ Off-air",
+    "return-type": "json",
+    "interval": 1,
+    "exec": "echo '{\"class\": \"audio recording\"}'",
+    "exec-if": "pgrep ffmpeg"
+  }
+}

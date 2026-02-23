@@ -1,0 +1,188 @@
+@define-color bg rgba(26, 43, 28, 0.7);
+@define-color bg-alt rgba(36, 59, 39, 0.8);
+@define-color bg-hover rgba(48, 77, 52, 0.9);
+@define-color fg #d4af37;
+@define-color fg-dim #a68528;
+@define-color gold #d4af37;
+@define-color gold-dim #a68528;
+@define-color red #cc3333;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* All modules as pills */
+#workspaces,
+#mode,
+#cpu,
+#memory,
+#mpd,
+#custom-stickynote,
+#tray,
+#idle_inhibitor,
+#pulseaudio,
+#battery,
+#clock,
+#custom-controlcenter {
+    background-color: @bg;
+    color: @fg;
+    border-radius: 100px;
+    padding: 2px 14px;
+    margin: 6px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    border: 1px solid @gold-dim;
+    transition: all 0.2s ease;
+}
+
+/* Hover effects */
+#cpu:hover,
+#memory:hover,
+#mpd:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover,
+#clock:hover {
+    background-color: @bg-hover;
+    border-color: @gold;
+    color: @gold;
+}
+
+/* Workspaces */
+#workspaces {
+    padding: 0 6px;
+}
+
+#workspaces button {
+    color: @fg-dim;
+    border-radius: 100px;
+    padding: 2px 8px;
+    margin: 4px 2px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    transition: all 0.2s ease-in-out;
+}
+
+#workspaces button:hover {
+    background-color: @bg-hover;
+    color: @gold;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+    background-color: @bg-hover;
+    border: 1px solid @gold;
+    color: @gold;
+    padding: 1px 13px;
+}
+
+#workspaces button.urgent {
+    background-color: @bg;
+    border: 1px solid @red;
+    color: @gold;
+}
+
+/* Specific module colors fallback */
+#cpu,
+#memory,
+#mpd,
+#pulseaudio,
+#backlight,
+#battery,
+#clock {
+    color: @gold;
+}
+
+/* Specific state colors */
+#pulseaudio.muted {
+    color: @fg-dim;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @gold;
+    border-color: @gold;
+}
+
+#battery.warning:not(.charging) {
+    color: @gold;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @bg;
+    color: @gold;
+    border-color: @red;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: @bg-hover;
+        color: @red;
+    }
+}
+
+/* Control Center */
+#custom-controlcenter {
+    color: @gold;
+    padding: 2px 16px;
+    font-size: 16px;
+    border-color: @gold;
+}
+
+#custom-controlcenter:hover {
+    background-color: @bg-hover;
+    color: @gold;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Sticky Note */
+#custom-stickynote {
+    color: @fg-dim;
+    font-size: 16px;
+}
+
+#custom-stickynote.has-note {
+    color: @gold;
+    border-color: @gold;
+}
+
+#custom-stickynote.has-note:hover {
+    background-color: @bg-hover;
+    color: @gold;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+#custom-stickynote:hover {
+    background-color: @bg-hover;
+    color: @gold;
+}
+
+/* Tray */
+#tray {
+    padding: 2px 10px;
+}
+
+#tray>.passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray>.needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
+}
