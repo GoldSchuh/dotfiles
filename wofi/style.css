@@ -1,7 +1,7 @@
 window {
     margin: 0px;
-    border: 2px solid #a68528;
-    background-color: rgba(26, 43, 28, 0.9);
+    border: 2px solid #d4af37;
+    background-color: rgba(0, 0, 0, 0.9);
     border-radius: 12px;
     font-family: "JetBrainsMono Nerd Font";
     font-size: 14px;
@@ -15,9 +15,9 @@ window {
 
 #input {
     margin: 5px;
-    border: 1px solid #a68528;
-    color: #d4af37;
-    background-color: rgba(36, 59, 39, 0.8);
+    border: 1px solid #d4af37;
+    color: #ffffff;
+    background-color: rgba(17, 17, 17, 0.8);
     border-radius: 8px;
 }
 
@@ -35,17 +35,17 @@ window {
 #text {
     margin: 5px;
     border: none;
-    color: #d4af37;
+    color: #ffffff;
 }
 
 #entry:selected {
-    background-color: #243b27;
+    background-color: #d4af37;
     border-radius: 8px;
     outline: none;
 }
 
 #text:selected {
-    color: #ffffff;
+    color: #000000;
 }
 
 #img {
