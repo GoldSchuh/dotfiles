@@ -815,6 +815,7 @@ PanelWindow {
         if (shell.ccPopup) shell.ccPopup.visible = false
         if (shell.notesPopup) shell.notesPopup.visible = false
         if (shell.spotifyPopup) shell.spotifyPopup.visible = false
+        if (shell.excalidrawPopup) shell.excalidrawPopup.visible = false
         if (picker.open) cancelBrowser()   // don't leak browser state/callback
         picker.open = !open
         picker.visible = open

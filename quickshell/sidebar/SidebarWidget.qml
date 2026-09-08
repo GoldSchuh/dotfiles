@@ -27,12 +27,13 @@ PanelWindow {
 
     readonly property bool pickerOpen: shell.bookPopup.visible
     readonly property bool spotifyOpen: shell.spotifyPopup.open
+    readonly property bool exOpen: shell.excalidrawPopup.open
     // expanded is sticky: entering sets it instantly, leaving starts a short
     // debounce (hideTimer) before collapsing. Resizing a layer surface can
     // transiently drop containsMouse — collapsing immediately on that made
     // the dock flicker between expanded and collapsed.
     property bool expanded: false
-    readonly property bool shown: expanded || pickerOpen || spotifyOpen
+    readonly property bool shown: expanded || pickerOpen || spotifyOpen || exOpen
 
     anchors { left: true; top: true; bottom: true }
     // Collapsed = just the trigger sliver at the edge, so only that sliver
@@ -94,14 +95,15 @@ PanelWindow {
         id: hideTimer
         interval: 250
         onTriggered: {
-            if (!hoverCatcher.containsMouse && !sidebar.pickerOpen && !sidebar.spotifyOpen)
+            if (!hoverCatcher.containsMouse && !sidebar.pickerOpen && !sidebar.spotifyOpen && !sidebar.exOpen)
                 sidebar.expanded = false
         }
     }
 
-    // Dock entries: the book button opens the bookshelf picker, the music
-    // button the MPRIS Spotify popup. Both are 36x36 rounded buttons in the
-    // dock pill style; an open popup highlights its button.
+    // Dock entries: the music button opens the MPRIS Spotify popup, the
+    // pencil the Excalidraw whiteboard, the book the bookshelf picker. All
+    // are 36x36 rounded buttons in the dock pill style; an open popup
+    // highlights its button.
     component DockButton: Rectangle {
         id: dockBtn
         required property string glyph
@@ -175,6 +177,14 @@ PanelWindow {
                     active: sidebar.spotifyOpen
                     highlighted: sidebar.spotifyOpen
                     onClicked: shell.spotifyPopup.toggle()
+                }
+
+                DockButton {
+                    glyph: "\uf040"
+                    glyphColor: sidebar.shell.exAccentColor
+                    active: sidebar.exOpen
+                    highlighted: sidebar.exOpen
+                    onClicked: shell.excalidrawPopup.toggle()
                 }
 
                 Rectangle {

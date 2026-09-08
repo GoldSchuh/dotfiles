@@ -115,6 +115,7 @@ Item {
         shell.ccPopup.visible = false
         shell.bookPopup.visible = false
         shell.spotifyPopup.visible = false
+        shell.excalidrawPopup.visible = false
         notesPopup.visible = open
     }
 

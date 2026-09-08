@@ -29,9 +29,9 @@ Qt 6.
     while the book picker is open). Quickshell has no global cursor API, so
     the strip is how "mouse near the edge" is implemented at all — and it
     must stay slim, because a surface's hover zone is also its input region
-    (a wide strip swallows every click inside it). Column of colorful
-    placeholder app icons; the bottom book icon toggles the book picker.
-    Uses the shared theme colors (`shell.barColor` etc.)
+    (a wide strip swallows every click inside it). Dock buttons: Spotify
+    (MPRIS popup), Excalidraw whiteboard, book picker; each highlights while
+    its popup is open. Uses the shared theme colors (`shell.barColor` etc.)
   - `sidebar/BookPicker.qml` — popup window cloning the UI of the
     "bookshelfs" Nextcloud app (github.com/Goldschuh/bookshelfs): create
     form + "Add book from file" + Restyle/Reset nav, a shelf of book spines
@@ -51,6 +51,14 @@ Qt 6.
   - `sidebar/FileBrowser.qml` — built-in file picker panel; the portal/Qt
     FileDialog silently fails to open when parented to a layer-shell window,
     so all picking goes through this
+  - `sidebar/ExcalidrawWidget.qml` — native Excalidraw-style whiteboard
+    popup (single persistent board): roughjs-style sketchy rendering seeded
+    per element, select/move/resize, rectangle/ellipse/diamond/line/arrow/
+    pen/text/eraser, pan + wheel zoom, undo/redo, PNG export. Stores a REAL
+    `.excalidraw` file (`excalidraw/board.excalidraw`, gitignored — personal
+    data, never commit) so boards interop with the actual Excalidraw app;
+    unknown element types are skipped on load. The pure JS core between the
+    `JS-BEGIN`/`JS-END` markers is extracted and tested headlessly
 
 ## Conventions
 
@@ -156,10 +164,10 @@ user's live instance is separate and hot-reloads on file save.
 
 ## Tests (headless environments)
 
-On machines without quickshell or a display, the bookshelf plugin has a
-headless test suite in `tests/` that extracts and runs the real JS logic from
-the QML sources, executes the epub/pdf extraction script with bash against
-real EPUB fixtures, and lints every QML file structurally:
+On machines without quickshell or a display, the bookshelf and excalidraw
+widgets have a headless test suite in `tests/` that extracts and runs the
+real JS logic from the QML sources (epub/pdf extraction, excalidraw core),
+and lints every QML file structurally:
 
 ```sh
 tests/run.sh

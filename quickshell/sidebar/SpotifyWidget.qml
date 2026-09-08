@@ -81,6 +81,7 @@ PanelWindow {
         if (shell.ccPopup) shell.ccPopup.visible = false
         if (shell.notesPopup) shell.notesPopup.visible = false
         if (shell.bookPopup) shell.bookPopup.visible = false
+        if (shell.excalidrawPopup) shell.excalidrawPopup.visible = false
         open = !open
         visible = open
     }

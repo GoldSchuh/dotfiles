@@ -47,17 +47,26 @@ Scope {
     property color shelfErrorColor: "#C34043"
     property color shelfErrorFgColor: "#ffffff"
 
+    // Excalidraw popup palette (whiteboard widget only): excalidraw.com's
+    // light chrome, dark ink and purple selection accent.
+    property color exBgColor: "#f8f9fa"
+    property color exFgColor: "#1e1e1e"
+    property color exAccentColor: "#6965db"
+
     // Exposed so widgets can close each other's popups.
     property var ccPopup: controlCenter.popup
     property var notesPopup: notesWidget.popup
     property var bookPopup: bookPicker.popup
     property var spotifyPopup: spotifyWidget.popup
+    property var excalidrawPopup: excalidrawWidget.popup
 
     SidebarWidget { shell: root }
 
     BookPicker { id: bookPicker; shell: root }
 
     SpotifyWidget { id: spotifyWidget; shell: root }
+
+    ExcalidrawWidget { id: excalidrawWidget; shell: root }
 
     PanelWindow {
         id: bar
@@ -150,6 +159,14 @@ Scope {
 
         function toggle() {
             spotifyWidget.toggle()
+        }
+    }
+
+    IpcHandler {
+        target: "excalidraw"
+
+        function toggle() {
+            excalidrawWidget.toggle()
         }
     }
 }
