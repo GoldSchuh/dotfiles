@@ -1051,9 +1051,24 @@ PanelWindow {
                     ctx.save()
                     ctx.translate(ex.view.scrollX, ex.view.scrollY)
                     ctx.scale(ex.view.zoom, ex.view.zoom)
-                    for (var i = 0; i < ex.elements.length; ++i)
-                        ex.drawElement(ctx, ex.elements[i])
-                    if (ex.draft) ex.drawElement(ctx, ex.draft)
+                    // A throw inside onPaint (one malformed element must not
+                    // blank the frame — an unpainted FBO shows up BLACK on
+                    // some drivers) aborts the whole paint: isolate each
+                    // element and skip the broken one instead.
+                    for (var i = 0; i < ex.elements.length; ++i) {
+                        try {
+                            ex.drawElement(ctx, ex.elements[i])
+                        } catch (e) {
+                            console.warn("excalidraw: skipping unrenderable element", ex.elements[i] && ex.elements[i].type, e)
+                        }
+                    }
+                    if (ex.draft) {
+                        try {
+                            ex.drawElement(ctx, ex.draft)
+                        } catch (e) {
+                            console.warn("excalidraw: draft render failed", e)
+                        }
+                    }
                     ctx.restore()
                     ex.drawSelectionOverlay(ctx)
                 }
@@ -1356,8 +1371,12 @@ PanelWindow {
                     ExTool { glyph: "\uf245"; active: ex.tool === "selection"; onPicked: ex.setTool("selection") }
                     ExTool { glyph: "\uf096"; active: ex.tool === "rectangle"; onPicked: ex.setTool("rectangle") }
                     ExTool { glyph: "\uf111"; active: ex.tool === "ellipse"; onPicked: ex.setTool("ellipse") }
-                    ExTool { glyph: "\uf3a5"; active: ex.tool === "diamond"; onPicked: ex.setTool("diamond") }
-                    ExTool { glyph: "\uf713"; active: ex.tool === "line"; onPicked: ex.setTool("line") }
+                    // FA5-only codepoints (gem \uf3a5, slash \uf713) are NOT in
+                    // AtkynsonMono Nerd Font (it only ships the FA4 range, like
+                    // every other working icon in this shell) — use base-font
+                    // geometric glyphs instead.
+                    ExTool { glyph: "\u25C6"; active: ex.tool === "diamond"; onPicked: ex.setTool("diamond") }
+                    ExTool { glyph: "\u2571"; active: ex.tool === "line"; onPicked: ex.setTool("line") }
                     ExTool { glyph: "\uf062"; active: ex.tool === "arrow"; onPicked: ex.setTool("arrow") }
                     ExTool { glyph: "\uf040"; active: ex.tool === "freedraw"; onPicked: ex.setTool("freedraw") }
                     ExTool { glyph: "\uf031"; active: ex.tool === "text"; onPicked: ex.setTool("text") }
