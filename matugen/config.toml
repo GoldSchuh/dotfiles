@@ -1,0 +1,12 @@
+[config]
+[templates.quickshell]
+input_path = "~/.config/matugen/templates/quickshell-colors.json"
+output_path = "~/.local/state/quickshell/generated/colors.json"
+
+[templates.niri]
+input_path = "~/.config/matugen/templates/niri-colors.kdl"
+output_path = "~/.config/niri/colors.kdl"
+
+[templates.walker]
+input_path = "~/.config/matugen/templates/walker-colors.css"
+output_path = "~/.config/walker/themes/default/colors.css"

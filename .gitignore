@@ -1,0 +1,52 @@
+# matugen generierte Dateien
+niri/colors.kdl
+walker/themes/default/colors.css
+
+# automatisch von xdg-desktop-menu generiert
+menus/applications-merged/
+
+# nested repo
+nvim/
+
+# app configs & junk
+.mono/
+BraveSoftware/
+EDRLab.ThoriumReader/
+ExpressLRS Configurator/
+KeePass/
+Nextcloud/
+QtProject/
+Stacher7/
+Surfshark/
+TIPP10/
+ZCode/
+ai.opencode.desktop/
+chromium/
+composer/
+configstore/
+dconf/
+discord/
+flutter/
+go/
+gtk-3.0/
+heroic/
+mimeapps.list
+mozilla/
+obsidian/
+opencode/
+pavucontrol.ini
+pulse/
+qalculate/
+quickshell/.opencode/
+quickshell/tests/
+qutebrowser/
+simple-update-notifier/
+spotify/
+systemd/
+t3code/
+user-dirs.dirs
+user-dirs.locale
+vlc/
+walker/themes/gridonly/item_menus-wallpapers.xml
+walker/themes/gridonly/item_menus-wallpapers_grid.xml
+zen/
