@@ -374,6 +374,7 @@ PanelWindow {
     // Absolute world points of a point-based element (line/arrow/freedraw).
     function absPoints(el) {
         var out = []
+        if (!el.points) return out
         for (var i = 0; i < el.points.length; i++)
             out.push([el.x + el.points[i][0], el.y + el.points[i][1]])
         return out
@@ -465,9 +466,12 @@ PanelWindow {
                 }
                 ctx.stroke()
             }
-            var heads = arrowHeadPaths(rng, pts[pts.length - 2][0], pts[pts.length - 2][1], pts[pts.length - 1][0], pts[pts.length - 1][1], el.roughness)
-            for (i = 0; i < heads.length; i++) {
-                ctx.beginPath(); strokePolyline(ctx, heads[i]); ctx.stroke()
+            // A one-point arrow (e.g. a just-created draft) has no head yet.
+            if (pts.length >= 2) {
+                var heads = arrowHeadPaths(rng, pts[pts.length - 2][0], pts[pts.length - 2][1], pts[pts.length - 1][0], pts[pts.length - 1][1], el.roughness)
+                for (i = 0; i < heads.length; i++) {
+                    ctx.beginPath(); strokePolyline(ctx, heads[i]); ctx.stroke()
+                }
             }
             break
         }
@@ -723,6 +727,9 @@ PanelWindow {
             updated: Date.now()
         }
         if (type === "text") { el.text = ""; el.fontSize = 20 }
+        // Point-based tools drag out their geometry from this seed point;
+        // without it the draft is painted (and committed) without points.
+        if (type === "line" || type === "arrow" || type === "freedraw") el.points = [[0, 0]]
         return el
     }
 

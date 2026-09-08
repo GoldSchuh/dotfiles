@@ -405,6 +405,27 @@ test("drawElement arrow emits body passes plus arrowhead strokes", () => {
   assert.strictEqual(count(ctx._ops, "stroke"), 4)
 })
 
+// Regression: drafts are painted while still holding only their seed point.
+// absPoints used to read .length of undefined and the arrow head indexed
+// pts[-1] — painting a fresh arrow crashed the Canvas.
+test("drawElement arrow with a single point does not throw and draws no head", () => {
+  const ctx = mockCtx()
+  drawElement(ctx, lineEl({ type: "arrow", points: [[0, 0]] }))
+  assert.strictEqual(count(ctx._ops, "stroke"), 2) // body passes only
+  assert.ok(!ctx._ops.some((o) => o[0] === "moveTo" && o[1] !== 0 && o[2] !== 0))
+})
+
+test("drawElement line and freedraw tolerate a single point", () => {
+  const ctx1 = mockCtx()
+  drawElement(ctx1, lineEl({ type: "line", points: [[0, 0]] }))
+  assert.strictEqual(count(ctx1._ops, "stroke"), 2)
+  assert.strictEqual(count(ctx1._ops, "lineTo"), 0)
+  const ctx2 = mockCtx()
+  drawElement(ctx2, lineEl({ type: "freedraw", points: [[0, 0]] }))
+  assert.strictEqual(count(ctx2._ops, "stroke"), 1)
+  assert.strictEqual(count(ctx2._ops, "lineTo"), 0)
+})
+
 test("drawElement ellipse fills under strokes when solid", () => {
   const ctx = mockCtx()
   drawElement(ctx, rectEl({ type: "ellipse", fillStyle: "solid", backgroundColor: "#ffc9c9" }))
