@@ -91,6 +91,10 @@ PanelWindow {
         open = visible
         if (visible) {
             if (!loaded) ensureDir.running = true
+            // The canvas FBO content does not reliably survive the layer
+            // surface being unmapped and re-mapped — without an explicit
+            // repaint the stale/uninitialized buffer is what shows.
+            board.requestPaint()
             focusTimer.restart()
         } else if (editingId !== "") {
             // Hidden by another popup while typing: settle the text state
@@ -1044,6 +1048,13 @@ PanelWindow {
                 onHeightChanged: requestPaint()
 
                 onPaint: {
+                    // While hidden, the layer surface is transiently resized
+                    // to 0 (the inset panel drags the canvas to -16): a paint
+                    // at that size no-ops the background fillRect (negative
+                    // rect) but still rasterizes the strokes onto whatever
+                    // is in the buffer — an uninitialized one shows up BLACK
+                    // after the next remap. Never paint degenerate sizes.
+                    if (width <= 0 || height <= 0) return
                     var ctx = getContext("2d")
                     ctx.setTransform(1, 0, 0, 1, 0, 0)
                     ctx.fillStyle = ex.viewBg
