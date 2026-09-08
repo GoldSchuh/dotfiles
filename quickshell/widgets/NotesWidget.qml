@@ -114,6 +114,7 @@ Item {
         open = !open
         shell.ccPopup.visible = false
         shell.bookPopup.visible = false
+        shell.spotifyPopup.visible = false
         notesPopup.visible = open
     }
 

@@ -51,10 +51,13 @@ Scope {
     property var ccPopup: controlCenter.popup
     property var notesPopup: notesWidget.popup
     property var bookPopup: bookPicker.popup
+    property var spotifyPopup: spotifyWidget.popup
 
     SidebarWidget { shell: root }
 
     BookPicker { id: bookPicker; shell: root }
+
+    SpotifyWidget { id: spotifyWidget; shell: root }
 
     PanelWindow {
         id: bar
@@ -139,6 +142,14 @@ Scope {
 
         function toggle() {
             bookPicker.toggle()
+        }
+    }
+
+    IpcHandler {
+        target: "spotify"
+
+        function toggle() {
+            spotifyWidget.toggle()
         }
     }
 }

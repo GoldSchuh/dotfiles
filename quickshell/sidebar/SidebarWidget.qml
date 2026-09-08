@@ -26,12 +26,13 @@ PanelWindow {
     required property var shell
 
     readonly property bool pickerOpen: shell.bookPopup.visible
+    readonly property bool spotifyOpen: shell.spotifyPopup.open
     // expanded is sticky: entering sets it instantly, leaving starts a short
     // debounce (hideTimer) before collapsing. Resizing a layer surface can
     // transiently drop containsMouse — collapsing immediately on that made
     // the dock flicker between expanded and collapsed.
     property bool expanded: false
-    readonly property bool shown: expanded || pickerOpen
+    readonly property bool shown: expanded || pickerOpen || spotifyOpen
 
     anchors { left: true; top: true; bottom: true }
     // Collapsed = just the trigger sliver at the edge, so only that sliver
@@ -93,34 +94,43 @@ PanelWindow {
         id: hideTimer
         interval: 250
         onTriggered: {
-            if (!hoverCatcher.containsMouse && !sidebar.pickerOpen)
+            if (!hoverCatcher.containsMouse && !sidebar.pickerOpen && !sidebar.spotifyOpen)
                 sidebar.expanded = false
         }
     }
 
-    // Top-level inline component (nested declarations break signal lookup).
-    component DockIcon: Rectangle {
-        id: iconBtn
-        required property var modelData
+    // Dock entries: the book button opens the bookshelf picker, the music
+    // button the MPRIS Spotify popup. Both are 36x36 rounded buttons in the
+    // dock pill style; an open popup highlights its button.
+    component DockButton: Rectangle {
+        id: dockBtn
+        required property string glyph
+        required property color glyphColor
+        required property bool active
+        required property bool highlighted
         width: 36
         height: 36
         radius: 10
-        color: hoverArea.containsMouse ? sidebar.shell.dimColor : Qt.rgba(1, 1, 1, 0.04)
+        color: mouse.containsMouse || dockBtn.active ? sidebar.shell.dimColor : Qt.rgba(1, 1, 1, 0.04)
+        border.width: dockBtn.highlighted ? 1 : 0
+        border.color: sidebar.shell.accentColor
         Behavior on color { ColorAnimation { duration: 120 } }
 
         Text {
             anchors.centerIn: parent
-            text: iconBtn.modelData.glyph
+            text: dockBtn.glyph
             font.family: sidebar.shell.iconFont
             font.pointSize: 13
-            color: iconBtn.modelData.color
+            color: dockBtn.glyphColor
         }
         MouseArea {
-            id: hoverArea
+            id: mouse
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
+            onClicked: dockBtn.clicked()
         }
+        signal clicked()
     }
 
     Item {
@@ -159,9 +169,12 @@ PanelWindow {
                 anchors.centerIn: parent
                 spacing: 6
 
-                Repeater {
-                    model: sidebar.dockItems
-                    delegate: DockIcon {}
+                DockButton {
+                    glyph: "\uf1bc"
+                    glyphColor: "#1db954"
+                    active: sidebar.spotifyOpen
+                    highlighted: sidebar.spotifyOpen
+                    onClicked: shell.spotifyPopup.toggle()
                 }
 
                 Rectangle {
@@ -172,44 +185,15 @@ PanelWindow {
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                // The one real entry: opens the book picker popup.
-                Rectangle {
-                    id: bookButton
-                    width: 36
-                    height: 36
-                    radius: 10
-                    color: bookArea.containsMouse || sidebar.pickerOpen ? sidebar.shell.dimColor : Qt.rgba(1, 1, 1, 0.04)
-                    border.width: sidebar.pickerOpen ? 1 : 0
-                    border.color: sidebar.shell.accentColor
-                    Behavior on color { ColorAnimation { duration: 120 } }
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: "\uf02d"
-                        font.family: sidebar.shell.iconFont
-                        font.pointSize: 13
-                        color: sidebar.shell.accentColor
-                    }
-                    MouseArea {
-                        id: bookArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: shell.bookPopup.toggle()
-                    }
+                // Opens the book picker popup.
+                DockButton {
+                    glyph: "\uf02d"
+                    glyphColor: sidebar.shell.accentColor
+                    active: sidebar.pickerOpen
+                    highlighted: sidebar.pickerOpen
+                    onClicked: shell.bookPopup.toggle()
                 }
             }
         }
     }
-
-    readonly property var dockItems: [
-        { glyph: "\uf489", color: "#b9c2d8", name: "Terminal" },
-        { glyph: "\uf121", color: "#21d789", name: "PyCharm" },
-        { glyph: "\uf303", color: "#1793d1", name: "Arch Linux" },
-        { glyph: "\uf11b", color: "#478cbf", name: "Godot" },
-        { glyph: "\uf00a", color: "#1d99f3", name: "Apps" },
-        { glyph: "\uf268", color: "#45b8ae", name: "Browser" },
-        { glyph: "\uf269", color: "#ff9500", name: "Firefox" },
-        { glyph: "\uf009", color: "#f59e0b", name: "Menu" }
-    ]
 }
