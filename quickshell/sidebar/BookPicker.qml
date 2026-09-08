@@ -486,7 +486,9 @@ PanelWindow {
 
         Image {
             anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
+            // Scale the cover to fill the whole book model exactly
+            // (CSS object-fit: cover): overflow is cropped, no letterbox.
+            fillMode: Image.PreserveAspectCrop
             source: parent.hasCover ? picker.pathToUrl(picker.resolveLib(parent.book.url)) : ""
         }
         Text {
@@ -1288,12 +1290,16 @@ PanelWindow {
                         }
                     }
 
-                    // Top pages face (the repo's .top): edge-on while flat,
-                    // shows as a white block above the spine on lift. It
-                    // hangs above the spine and hinges at its bottom edge
-                    // (y=-2, the spine top): it used to sit 190px lower,
-                    // which painted a detached white slab over the middle of
-                    // every book shorter than 280px.
+                    // Top pages face (the repo's .top): statically edge-on,
+                    // revealed purely by the book's lift tilt, exactly like
+                    // the upstream CSS. Animating the unfold here (90 -> 78)
+                    // swept this 190px quad toward the camera mid-swing and
+                    // Qt's perspective projection magnified it into a white
+                    // block flashing above the book. It hangs above the
+                    // spine and hinges at its bottom edge (y=-2, the spine
+                    // top): it used to sit 190px lower, which painted a
+                    // detached white slab over the middle of every book
+                    // shorter than 280px.
                     Rectangle {
                         x: 0
                         y: -192
@@ -1304,10 +1310,9 @@ PanelWindow {
                         border.width: 1
                         border.color: "#b9b2a4"
                         transform: Rotation {
-                            angle: bookRoot.lift ? 78 : 90
+                            angle: 90
                             axis { x: 1; y: 0; z: 0 }
                             origin { x: 25; y: 190 }
-                            Behavior on angle { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
                         }
                     }
 
