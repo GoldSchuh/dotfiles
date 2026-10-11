@@ -13,6 +13,7 @@ local path = noctalia.pluginDataDir() .. "/notes.json"
 
 local notes = {}
 local confirmId = nil
+local hoveredKey = nil
 
 local function publish()
   noctalia.state.set("notes.count", #notes)
@@ -32,6 +33,25 @@ local function previewFor(note)
   b = noctalia.string.trim(b)
   if #b > 72 then b = string.sub(b, 1, 72) .. "…" end
   return b
+end
+
+local function relativeTime(ms)
+  if ms == nil or ms <= 0 then return nil end
+  local diff = math.floor((noctalia.nowMs() - ms) / 1000)
+  if diff < 0 then diff = 0 end
+  if diff < 60 then
+    return noctalia.tr("ui.time_now")
+  elseif diff < 3600 then
+    return noctalia.tr("ui.time_min", { n = tostring(math.floor(diff / 60)) })
+  end
+  local edited = math.floor(ms / 1000)
+  local day = noctalia.formatTime("%Y-%m-%d", edited)
+  if day == noctalia.formatTime("%Y-%m-%d") then
+    return noctalia.tr("ui.time_today", { t = noctalia.formatTime("%H:%M", edited) })
+  elseif day == noctalia.formatTime("%Y-%m-%d", noctalia.nowMs() / 1000 - 86400) then
+    return noctalia.tr("ui.time_yesterday")
+  end
+  return noctalia.formatTime("%d.%m.", edited)
 end
 
 local function sanitize(raw)
@@ -111,21 +131,24 @@ local function performDelete()
 end
 
 local function noteRow(note)
-  return ui.row({
-    key = "note-" .. note.id,
-    gap = 8,
-    align = "center",
-    padding = 6,
-    radius = 8,
-    onClick = function() openEditor(note.id) end,
-  }, {
+  local isHovered = hoveredKey == note.id
+  local children = {
     ui.column({ gap = 2, flexGrow = 1 }, {
-      ui.label({
-        text = titleFor(note),
-        fontSize = 13,
-        fontWeight = "bold",
-        color = "on_surface",
-        maxLines = 1,
+      ui.row({ gap = 8, align = "center" }, {
+        ui.label({
+          text = titleFor(note),
+          fontSize = 13,
+          fontWeight = "bold",
+          color = "on_surface",
+          maxLines = 1,
+          flexGrow = 1,
+        }),
+        ui.label({
+          text = relativeTime(note.updatedAt) or "",
+          fontSize = 10,
+          color = "on_surface_variant",
+          maxLines = 1,
+        }),
       }),
       ui.label({
         text = previewFor(note),
@@ -144,7 +167,18 @@ local function noteRow(note)
       onClick = function() confirmId = note.id; render() end,
       tooltip = noctalia.tr("ui.delete_tooltip"),
     }),
-  })
+  }
+  return ui.row({
+    key = note.id,
+    gap = 8,
+    align = "center",
+    padding = 6,
+    paddingH = 8,
+    radius = 8,
+    fill = isHovered and "tertiary" or "surface",
+    onHover = "onRowHover",
+    onClick = function() openEditor(note.id) end,
+  }, children)
 end
 
 local function listTree()
@@ -233,6 +267,11 @@ end
 
 function onNewNote()
   createNote()
+end
+
+function onRowHover(state, key)
+  hoveredKey = (state == "true") and key or nil
+  render()
 end
 
 function onCloseClicked()

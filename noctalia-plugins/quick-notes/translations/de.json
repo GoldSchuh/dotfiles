@@ -14,5 +14,12 @@
   "ui.body_placeholder": "Notiz schreiben…",
   "ui.autosaves": "speichert automatisch",
   "ui.missing": "Notiz nicht gefunden.",
-  "ui.back_short": "Zurück"
+  "ui.back_short": "Zurück",
+  "ui.editing": "wird bearbeitet…",
+  "ui.saved": "gespeichert",
+  "ui.counts": "{words} Wörter · {chars} Zeichen",
+  "ui.time_now": "gerade eben",
+  "ui.time_min": "vor {n} Min.",
+  "ui.time_today": "heute um {t}",
+  "ui.time_yesterday": "gestern"
 }

@@ -2,10 +2,10 @@
   "ui.title": "Notes",
   "ui.untitled": "Untitled",
   "ui.empty": "No notes yet. Press + to create one.",
-  "ui.confirm_delete": "Delete this note? This can't be undone.",
+  "ui.confirm_delete": "Delete this note? This cannot be undone.",
   "ui.cancel": "Cancel",
   "ui.delete": "Delete",
-  "ui.back_tooltip": "Back to notes",
+  "ui.back_tooltip": "Back to the notes",
   "ui.delete_tooltip": "Delete note",
   "ui.delete_note_shortcut": "Delete this note",
   "ui.new_tooltip": "New note",
@@ -14,5 +14,12 @@
   "ui.body_placeholder": "Write a note…",
   "ui.autosaves": "autosaves",
   "ui.missing": "Note not found.",
-  "ui.back_short": "Back"
+  "ui.back_short": "Back",
+  "ui.editing": "editing…",
+  "ui.saved": "saved",
+  "ui.counts": "{words} words · {chars} chars",
+  "ui.time_now": "just now",
+  "ui.time_min": "{n} min ago",
+  "ui.time_today": "today at {t}",
+  "ui.time_yesterday": "yesterday"
 }

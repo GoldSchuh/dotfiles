@@ -4,7 +4,7 @@
 id = "roman/quick-notes"
 name = "Quick Notes"
 version = "1.0.0"
-plugin_api = 24
+plugin_api = 27
 author = "roman"
 license = "MIT"
 dependencies = []
@@ -32,4 +32,4 @@ entry = "editor.luau"
 width = 380
 height = 520
 placement = "attached"
-keyboard_focus = "exclusive"
+keyboard_focus = "on_demand"
