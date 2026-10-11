@@ -1,1 +1,0 @@
-fd_flags = ["--hidden", "--ignore-vcs", "--type", "file", "--type", "directory", "--exclude", ".git", "--exclude", "node_modules", "--exclude", ".cache"]
