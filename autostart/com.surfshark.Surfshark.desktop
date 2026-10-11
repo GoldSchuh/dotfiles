@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Surfshark
+X-XDP-Autostart=com.surfshark.Surfshark
+Exec=flatpak run com.surfshark.Surfshark
+X-Flatpak=com.surfshark.Surfshark

@@ -11,11 +11,13 @@ nvim/
 # app configs & junk
 .mono/
 BraveSoftware/
+calibre/
 EDRLab.ThoriumReader/
 ExpressLRS Configurator/
 KeePass/
 Nextcloud/
 QtProject/
+QtProject.conf
 Stacher7/
 Surfshark/
 TIPP10/
@@ -28,6 +30,7 @@ dconf/
 discord/
 flutter/
 go/
+gh/
 gtk-3.0/
 heroic/
 mimeapps.list
