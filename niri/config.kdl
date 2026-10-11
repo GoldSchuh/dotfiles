@@ -63,6 +63,8 @@ layout {
     background-color "transparent"
     focus-ring {
         width 6
+        active-color "#5b4426"
+        inactive-color "#5c4a30aa"
 
     }
 
@@ -86,33 +88,38 @@ overview {
 // Recent-Windows-Switcher (Super+Tab): Markierung wie der normale
 // Focus-Ring (Farbe und Breite 6) statt grauem Block.
 recent-windows {
+    // Erst nach kurzer Verzögerung einblenden (statt sofort beim WWW-Tap),
+    // schneller Wechsel bleibt trotzdem möglich.
+    open-delay-ms 250
     highlight {
-        active-color "#800000ff"
-        urgent-color "#9b0000ff"
+        active-color "#5b4426e6"
+        urgent-color "#a4433aee"
         padding 6
         corner-radius 12
+    }
+    // Kleinere Vorschaubilder statt riesiges Fenster in der Mitte
+    // (GNOME-artig: kompakte Kacheln)
+    previews {
+        max-height 260
+        max-scale 0.3
     }
 }
 
 // Wallpaper-Layer in den Backdrop legen, statt pro Workspace zu rendern
+// (Option 2 aus der Noctalia-Doku: stationäres Wallpaper)
 layer-rule {
-    match namespace="awww-daemon"
+    match namespace="^noctalia-wallpaper"
     place-within-backdrop true
 }
 
 // Workspace-Hintergrund transparent machen, damit der Backdrop durchscheint
 
 
-spawn-at-startup "swayidle" "-w" \
-    "timeout" "300" "swaylock" \
-    "timeout" "600" "niri msg action power-off-monitors" \
-    "before-sleep" "swaylock -f"
 
 
 //start quickshell
-spawn-sh-at-startup "quickshell"
-
-spawn-sh-at-startup "awww-daemon"
+// start noctalia (bar, launcher, notifications, wallpaper, lock screen, window switcher)
+spawn-at-startup "noctalia"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
@@ -147,6 +154,51 @@ window-rule {
     // You can get away with just app-id="wezterm" if you want.
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
+}
+
+// Floating Noctalia settings window.
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
+}
+
+/* Apps: blur without xray. */
+window-rule {
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+/* Noctalia surfaces: disable xray so blur looks realistic.
+   Noctalia publishes blur regions automatically. */
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+    background-effect {
+        xray false
+    }
+}
+
+layer-rule {
+    match namespace="noctalia-window-switcher"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+blur {
+    passes 2
+    offset 3.0
+    noise 0.24
+    saturation 0.95
+}
+
+// Allows notification actions and window activation from Noctalia.
+debug {
+    honor-xdg-activation-with-invalid-serial
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
@@ -195,13 +247,10 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: walker" { spawn "walker"; }
-    Super+M hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+A hotkey-overlay-title="Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Super+M hotkey-overlay-title="Lock the Screen: noctalia" { spawn-sh "noctalia msg session lock"; }
     Mod+E hotkey-overlay-title="Run files" 		   { spawn "Files";}
-    Mod+W hotkey-overlay-title="run wallpaper-picker" {spawn "walker" "-m" "menus:wallpapers" "--theme" "gridonly";}
-
-    Mod+N hotkey-overlay-title="Toggle Notes" { spawn "quickshell" "ipc" "call" "notes" "toggle";}
-
-
+    Mod+W hotkey-overlay-title="wallpaper picker" { spawn-sh "noctalia msg panel-toggle wallpaper"; }
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
     // For example, this is a standard bind to toggle the screen reader (orca).
