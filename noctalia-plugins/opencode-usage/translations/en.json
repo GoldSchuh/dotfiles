@@ -1,0 +1,13 @@
+{
+  "ui.panel_title": "OpenCode",
+  "ui.tokens_today": "tokens today",
+  "ui.sessions_total": "{count} sessions all-time",
+  "ui.today_per_model": "Today per model",
+  "ui.alltime_per_model": "All-time per model",
+  "ui.last_ndays": "Last {count} days",
+  "ui.no_models": "No usage recorded yet",
+  "ui.scanning": "Scanning opencode.db…",
+  "ui.error": "Scanner failed",
+  "settings.refresh_interval.label": "Refresh interval (seconds)",
+  "settings.db_path.label": "OpenCode database path"
+}

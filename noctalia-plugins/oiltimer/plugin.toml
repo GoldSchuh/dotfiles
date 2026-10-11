@@ -1,0 +1,30 @@
+# Oil Timer - bar widget + desktop-widget-style panel for the shared
+# noctalia/timer countdown service. The panel mirrors the official plugin's
+# desktop widget layout: big time, progress bar, +/- minute buttons and
+# Start/Pause/Reset.
+id = "roman/oiltimer"
+name = "Oil Timer"
+version = "1.0.0"
+plugin_api = 20
+author = "roman"
+license = "MIT"
+dependencies = []
+tags = ["countdown", "productivity"]
+icon = "clock"
+description = "Bar timer widget whose panel looks like the timer desktop widget."
+
+[[service]]
+id = "timer"
+entry = "service.luau"
+
+[[widget]]
+id = "bar"
+entry = "bar.luau"
+
+[[panel]]
+id = "panel"
+entry = "panel.luau"
+width = 300
+height = 260
+placement = "attached"
+open_near_click = true

@@ -1,0 +1,18 @@
+{
+  "ui.title": "Notizen",
+  "ui.untitled": "Ohne Titel",
+  "ui.empty": "Noch keine Notizen. Drücke +, um eine anzulegen.",
+  "ui.confirm_delete": "Diese Notiz löschen? Das kann nicht widerrufen werden.",
+  "ui.cancel": "Abbrechen",
+  "ui.delete": "Löschen",
+  "ui.back_tooltip": "Zurück zu den Notizen",
+  "ui.delete_tooltip": "Notiz löschen",
+  "ui.delete_note_shortcut": "Diese Notiz löschen",
+  "ui.new_tooltip": "Neue Notiz",
+  "ui.limit_reached": "Notiz-Limit erreicht ({limit})",
+  "ui.title_placeholder": "Titel",
+  "ui.body_placeholder": "Notiz schreiben…",
+  "ui.autosaves": "speichert automatisch",
+  "ui.missing": "Notiz nicht gefunden.",
+  "ui.back_short": "Zurück"
+}

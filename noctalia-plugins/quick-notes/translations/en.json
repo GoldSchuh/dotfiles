@@ -1,0 +1,18 @@
+{
+  "ui.title": "Notes",
+  "ui.untitled": "Untitled",
+  "ui.empty": "No notes yet. Press + to create one.",
+  "ui.confirm_delete": "Delete this note? This can't be undone.",
+  "ui.cancel": "Cancel",
+  "ui.delete": "Delete",
+  "ui.back_tooltip": "Back to notes",
+  "ui.delete_tooltip": "Delete note",
+  "ui.delete_note_shortcut": "Delete this note",
+  "ui.new_tooltip": "New note",
+  "ui.limit_reached": "Note limit reached ({limit})",
+  "ui.title_placeholder": "Title",
+  "ui.body_placeholder": "Write a note…",
+  "ui.autosaves": "autosaves",
+  "ui.missing": "Note not found.",
+  "ui.back_short": "Back"
+}

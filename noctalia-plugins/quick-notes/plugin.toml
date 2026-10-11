@@ -1,0 +1,35 @@
+# Quick Notes - bar widget that opens a notes panel: create, edit, delete
+# short notes; autosaved as JSON in the plugin data dir. Noctalia port of
+# the omarchy plugin TibeDev/omarchy-quick-notes (same limits & interactions).
+id = "roman/quick-notes"
+name = "Quick Notes"
+version = "1.0.0"
+plugin_api = 24
+author = "roman"
+license = "MIT"
+dependencies = []
+tags = ["notes", "productivity"]
+icon = "notes"
+description = "Create, edit, and delete quick notes from a popup panel."
+
+# Two panel entries: the list (same size as every other panel) and a taller
+# editor panel that takes over while writing, so the text box gets room.
+[[widget]]
+id = "bar"
+entry = "bar.luau"
+
+[[panel]]
+id = "notes"
+entry = "panel.luau"
+width = 380
+height = 320
+placement = "attached"
+keyboard_focus = "on_demand"
+
+[[panel]]
+id = "editor"
+entry = "editor.luau"
+width = 380
+height = 520
+placement = "attached"
+keyboard_focus = "exclusive"

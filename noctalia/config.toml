@@ -1,0 +1,78 @@
+# Noctalia (v5) configuration.
+# Noctalia reads every *.toml in ~/.config/noctalia (alphabetically merged).
+# Changes via the Settings GUI win over this file and are persisted to
+# ~/.local/state/noctalia/settings.toml — copy them back here if you want them tracked.
+# All options: https://docs.noctalia.dev/noctalia/configuration/
+
+[shell]
+lang = "de"
+
+# Theme: custom palette recreating the old quickshell look
+# (bar #800000, text #f2ece0, accent #e0b45c)
+[theme]
+mode = "dark"
+source = "custom"
+custom_palette = "Oleo"
+
+# Floating bar like the old quickshell:
+# height 32, margins 38 sides / 10 top, radius 12, solid background
+[bar.main]
+position = "top"
+thickness = 34
+margin_ends = 38
+margin_edge = 10
+background_opacity = 0.87
+compositor_blur = true
+shadow = true
+border = "#3d2c18"
+border_width = 1.5
+radius = 14
+padding = 14
+widget_spacing = 8
+capsule = true
+capsule_fill = "surface_variant"
+capsule_radius = 8.0
+capsule_border = "outline"
+capsule_border_width = 1.0
+reserve_space = true
+
+start = ["roman/oiltimer:bar", "noctalia/notes:notes", "workspaces", "roman/opencode-usage:bar", "roman/quick-notes:bar"]
+center = ["clock"]
+end = ["media", "notifications", "clipboard", "bluetooth", "volume", "brightness", "battery", "control-center", "session"]
+
+# bigger workspace pills
+[widget.workspaces]
+pill_scale = 1.0
+active_pill_size = 3.2
+focused_color = "primary"        # muted chair-green
+occupied_color = "#7d5c38"       # aged wood, echoes the frame
+empty_color = "#3d2c18"          # dark umber ground
+urgent_color = "error"
+
+# timer plugin: countdown desktop widget, top-right area
+[desktop_widgets]
+enabled = false
+
+# local plugins tracked in the dotfiles
+[[plugins.source]]
+name     = "dotfiles"
+kind     = "path"
+location = "~/dotfiles/noctalia-plugins"
+enabled  = true
+
+[plugins]
+enabled = ["noctalia/notes", "roman/oiltimer", "roman/quick-notes"]
+
+[wallpaper]
+# empty = XDG Pictures directory
+directory = ""
+
+# Control Center: hide the Monitor, Network, Weather and Calendar tabs
+[control_center]
+hidden_tabs = ["monitor", "network", "weather", "calendar"]
+
+[control_center.calendar]
+show_events_card = false
+
+[weather]
+enabled = false

@@ -1,0 +1,41 @@
+# OpenCode Usage - token usage stats from opencode.db as a bar widget.
+# Scanner script bundled under scripts/, reused from the MIT-licensed
+# dizziee.opencode-model-usage plugin (JJDizz1L) - the sqlite logic is
+# shell-agnostic, so it is shared verbatim.
+id = "roman/opencode-usage"
+name = "OpenCode Usage"
+version = "1.0.0"
+plugin_api = 24
+author = "roman"
+license = "MIT"
+dependencies = ["python"]
+tags = ["opencode", "tokens", "ai"]
+icon = "sparkles"
+description = "OpenCode token usage (today, week, all-time per model) as a bar widget."
+
+[[setting]]
+key = "refresh_interval_sec"
+type = "int"
+label_key = "settings.refresh_interval.label"
+default = 300
+
+[[setting]]
+key = "db_path"
+type = "string"
+label_key = "settings.db_path.label"
+default = "~/.local/share/opencode/opencode.db"
+
+[[service]]
+id = "service"
+entry = "service.luau"
+
+[[widget]]
+id = "bar"
+entry = "bar.luau"
+
+[[panel]]
+id = "panel"
+entry = "panel.luau"
+width = 380
+height = 460
+placement = "attached"
