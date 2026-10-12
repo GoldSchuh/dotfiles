@@ -9,8 +9,8 @@ end
 
 local function soundCard(sound)
     return ui.column({ gap = 12, padding = 16, flexGrow = 1, minWidth = 240,
-        fill = sound.enabled and "primary/0.14" or "surface_variant/0.25", radius = 16,
-        border = sound.enabled and "primary/0.7" or "outline/0.45", borderWidth = 1.5 }, {
+        fill = sound.enabled and "surface_variant/0.5" or "surface_variant/0.25", radius = 16,
+        border = "outline/0.5", borderWidth = 1.5 }, {
         ui.row({ gap = 12, align = "center" }, {
             soundIcon(sound),
             ui.column({ gap = 3, flexGrow = 1 }, {
@@ -68,7 +68,7 @@ function render()
         ui.glyph({ name = engine.running and "player-stop" or "player-play", size = 26, color = "on_primary" }),
     })
 
-    panel.render(ui.column({ gap = 12, padding = 16, height = 480, fill = "surface/0.45" }, {
+    panel.render(ui.column({ gap = 14, padding = 20, height = 480 }, {
         ui.scroll({ gap = 12, flexGrow = 1, align = "stretch" }, grid),
         ui.row({ align = "center", justify = "center" }, {
             playButton,
