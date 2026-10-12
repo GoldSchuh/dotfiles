@@ -2,15 +2,17 @@
 
 import colors
 
+config.load_autoconfig(False)
+
 c.window.hide_decoration = True
-c.window.title_format = "{percent}{audio}{current_title} — {backend}"
+c.window.title_format = "{perc}{audio}{current_title} — {backend}"
 
 # ---- behavior niceties ----
 c.zoom.default = 105
-c.header.accept_language = "de-DE,de;q=0.9,en;q=0.8"
+c.content.headers.accept_language = "de-DE,de;q=0.9,en;q=0.8"
 c.scrolling.smooth = True
 c.tabs.select_on_remove = "last-used"
-c.tabs.new_position.stacking = "prev"
+c.tabs.new_position.stacking = False
 c.editor.command = ["kitty", "-e", "nvim", "{file}"]
 
 # ---- fonts: JetBrains Mono everywhere, like kitty ----
@@ -25,8 +27,7 @@ c.tabs.position = "top"
 c.tabs.show = "multiple"
 c.tabs.width = "23%"
 c.tabs.padding = {"top": 5, "bottom": 5, "left": 10, "right": 10}
-c.tabs.indicator_padding = {"top": 4, "bottom": 4}
-c.tabs.favicon = False
+c.tabs.favicons.show = "never"
 c.tabs.title.format = "{audio}{index}: {current_title}"
 
 c.colors.tabs.bar.bg = colors.bg
@@ -39,21 +40,11 @@ c.colors.tabs.selected.even.bg = colors.surface
 c.colors.tabs.selected.even.fg = colors.bright_fg
 c.colors.tabs.selected.odd.bg = colors.surface
 c.colors.tabs.selected.odd.fg = colors.bright_fg
-c.colors.tabs.selected.even.private.bg = colors.variant
-c.colors.tabs.selected.even.private.fg = colors.dim_fg
-c.colors.tabs.selected.odd.private.bg = colors.variant
-c.colors.tabs.selected.odd.private.fg = colors.dim_fg
 
 c.colors.tabs.even.bg = colors.bg
 c.colors.tabs.even.fg = colors.dim_fg
 c.colors.tabs.odd.bg = colors.bg
 c.colors.tabs.odd.fg = colors.dim_fg
-c.colors.tabs.even.private.bg = colors.bg
-c.colors.tabs.odd.private.bg = colors.bg
-
-c.tabs.pinned.selected = True
-c.colors.tabs.selected.pinned.even.bg = colors.hover
-c.colors.tabs.selected.pinned.even.fg = colors.bright_fg
 
 # ---- statusbar: low-key, only visible in modes ----
 c.statusbar.show = "in-mode"
@@ -70,7 +61,6 @@ c.colors.statusbar.command.bg = colors.variant
 c.colors.statusbar.command.fg = colors.dim_fg
 c.colors.statusbar.command.private.bg = colors.variant
 c.colors.statusbar.command.private.fg = colors.dim_fg
-c.colors.statusbar.command.prompt.fg = colors.primary
 c.colors.statusbar.caret.bg = colors.bg
 c.colors.statusbar.caret.fg = colors.gold
 c.colors.statusbar.caret.selection.bg = colors.selection
@@ -88,7 +78,6 @@ c.completion.use_best_match = False
 c.completion.open_categories = ["searchengines", "quickmarks", "bookmarks", "history"]
 
 c.colors.completion.fg = colors.fg
-c.colors.completion.bg = colors.bg
 c.colors.completion.category.fg = colors.dim_fg
 c.colors.completion.category.bg = colors.bg
 c.colors.completion.item.selected.fg = colors.bright_fg
