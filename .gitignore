@@ -41,7 +41,11 @@ pavucontrol.ini
 pulse/
 qalculate/
 quickshell/.opencode/
-qutebrowser/
+qutebrowser/*
+!qutebrowser/bookmarks
+!qutebrowser/quickmarks
+!qutebrowser/greasemonkey
+!qutebrowser/config.py
 simple-update-notifier/
 spotify/
 systemd/

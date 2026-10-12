@@ -7,3 +7,7 @@ output_path = "~/.config/niri/colors.kdl"
 [templates.kitty]
 input_path = "~/.config/matugen/templates/kitty-colors.conf"
 output_path = "~/.config/kitty/colors.conf"
+
+[templates.qutebrowser]
+input_path = "~/.config/matugen/templates/qutebrowser-colors.py"
+output_path = "~/.config/qutebrowser/colors.py"
