@@ -69,7 +69,7 @@ function render()
     })
 
     panel.render(ui.column({ gap = 14, padding = 20, height = 480 }, {
-        ui.scroll({ gap = 12, flexGrow = 1, align = "stretch" }, grid),
+        ui.scroll({ gap = 12, paddingRight = 12, flexGrow = 1, align = "stretch" }, grid),
         ui.row({ align = "center", justify = "center" }, {
             playButton,
         }),
