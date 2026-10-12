@@ -13,10 +13,10 @@ plugin_api = 24
 [[panel]]
 id = "main"
 entry = "panel.luau"
-width = 1100
-height = 720
-placement = "floating"
-position = "center"
+width = 560
+height = 480
+placement = "attached"
+keyboard_focus = "on_demand"
 
 [[widget]]
 id = "ambient-sounds"

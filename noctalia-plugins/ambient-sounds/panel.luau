@@ -51,7 +51,7 @@ end
 function render()
     local cardRows = {}
     for index, sound in ipairs(sounds) do
-        local row = cardRows[math.ceil(index / 4)]
+        local row = cardRows[math.ceil(index / 2)]
         if not row then
             row = {}
             table.insert(cardRows, row)
@@ -61,12 +61,12 @@ function render()
 
     local grid = {}
     for _, row in ipairs(cardRows) do
-        while #row < 4 do table.insert(row, ui.spacer({ flexGrow = 1, minWidth = 240 })) end
+        while #row < 2 do table.insert(row, ui.spacer({ flexGrow = 1, minWidth = 240 })) end
         table.insert(grid, ui.row({ gap = 12, align = "stretch" }, row))
     end
 
-    panel.render(ui.column({ gap = 18, padding = 22, height = 676, fill = "surface/0.45" }, {
-        ui.row({ gap = 18, padding = 20, align = "center", fill = "surface_variant/0.30", radius = 18,
+    panel.render(ui.column({ gap = 14, padding = 16, height = 440, fill = "surface/0.45" }, {
+        ui.row({ gap = 14, padding = 14, align = "center", fill = "surface_variant/0.30", radius = 18,
             border = engine.running and "primary/0.65" or "primary/0.35", borderWidth = 1 }, {
             ui.row({ width = 58, height = 58, fill = "surface/0.75", radius = 16, border = "primary/0.7", borderWidth = 1, align = "center", justify = "center" }, {
                 ui.glyph({ name = "music", size = 30, color = "primary" }),
