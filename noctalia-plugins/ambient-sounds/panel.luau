@@ -65,20 +65,23 @@ function render()
         table.insert(grid, ui.row({ gap = 12, align = "stretch" }, row))
     end
 
-    panel.render(ui.column({ gap = 14, padding = 16, height = 440, fill = "surface/0.45" }, {
-        ui.row({ gap = 14, padding = 14, align = "center", fill = "surface_variant/0.30", radius = 18,
-            border = engine.running and "primary/0.65" or "primary/0.35", borderWidth = 1 }, {
-            ui.row({ width = 58, height = 58, fill = "surface/0.75", radius = 16, border = "primary/0.7", borderWidth = 1, align = "center", justify = "center" }, {
-                ui.glyph({ name = "music", size = 30, color = "primary" }),
-            }),
-            ui.column({ gap = 4, flexGrow = 1 }, {
-                ui.label({ text = "Ambient Sounds", fontSize = 25, fontWeight = "bold" }),
-                ui.label({ text = engine.running and "Engine running" or "High-Fidelity Ambient Sound Mixer", fontSize = 12, color = "on_surface_variant" }),
-            }),
-            ui.button({ glyph = engine.running and "player-stop" or "player-play", glyphSize = 16, text = engine.running and "STOP ENGINE" or "START ENGINE", variant = engine.running and "outline" or "primary", controlSize = "md",
-                onClick = function() if engine.running then engine:stopAll() else engine:start() end; render() end }),
-        }),
+    local playButton = ui.row({
+        width = 58, height = 58, radius = 29, fill = "primary",
+        align = "center", justify = "center",
+        onClick = function()
+            if engine.running then engine:stopAll() else engine:start() end
+            render()
+        end,
+    }, {
+        ui.glyph({ name = engine.running and "player-stop" or "player-play", size = 26, color = "on_primary" }),
+    })
+
+    panel.render(ui.column({ gap = 12, padding = 16, height = 440, fill = "surface/0.45" }, {
         ui.scroll({ gap = 12, flexGrow = 1, align = "stretch" }, grid),
+        ui.row({ gap = 12, padding = 10, align = "center", justify = "center",
+            fill = "surface_variant/0.30", radius = 16 }, {
+            playButton,
+        }),
     }))
 end
 
