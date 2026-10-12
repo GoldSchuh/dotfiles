@@ -36,7 +36,7 @@ capsule_border = "outline"
 capsule_border_width = 1.0
 reserve_space = true
 
-start = ["roman/oiltimer:bar", "noctalia/notes:notes", "reaperhound/ambient-sounds:ambient-sounds", "workspaces", "roman/opencode-usage:bar", "roman/quick-notes:bar"]
+start = ["roman/oiltimer:bar", "noctalia/notes:notes", "workspaces", "roman/opencode-usage:bar", "roman/quick-notes:bar", "reaperhound/ambient-sounds:ambient-sounds"]
 center = ["clock"]
 end = ["media", "notifications", "clipboard", "bluetooth", "volume", "brightness", "battery", "control-center", "session"]
 
