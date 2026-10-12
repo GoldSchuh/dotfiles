@@ -76,10 +76,9 @@ function render()
         ui.glyph({ name = engine.running and "player-stop" or "player-play", size = 26, color = "on_primary" }),
     })
 
-    panel.render(ui.column({ gap = 12, padding = 16, height = 440, fill = "surface/0.45" }, {
+    panel.render(ui.column({ gap = 10, padding = 16, height = 480, fill = "surface/0.45" }, {
         ui.scroll({ gap = 12, flexGrow = 1, align = "stretch" }, grid),
-        ui.row({ gap = 12, padding = 10, align = "center", justify = "center",
-            fill = "surface_variant/0.30", radius = 16 }, {
+        ui.row({ padding = 2, align = "center", justify = "center" }, {
             playButton,
         }),
     }))
