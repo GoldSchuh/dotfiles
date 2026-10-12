@@ -1,0 +1,23 @@
+{
+  "ui.panel_title": "RSS Feeds",
+  "ui.loading": "Lade Feeds…",
+  "ui.error": "Feeds nicht erreichbar",
+  "ui.no_feeds": "Keine Feeds eingerichtet. In den Plugin-Einstellungen unter Feed 1–5 URLs eintragen.",
+  "ui.no_items": "Keine Einträge",
+  "ui.time_now": "gerade eben",
+  "ui.time_min": "vor {n} Min.",
+  "ui.time_hour": "vor {n} Std.",
+  "ui.time_yesterday": "gestern",
+  "settings.feed1.label": "Feed 1 URL",
+  "settings.title1.label": "Feed 1 Titel (optional)",
+  "settings.feed2.label": "Feed 2 URL",
+  "settings.title2.label": "Feed 2 Titel (optional)",
+  "settings.feed3.label": "Feed 3 URL",
+  "settings.title3.label": "Feed 3 Titel (optional)",
+  "settings.feed4.label": "Feed 4 URL",
+  "settings.title4.label": "Feed 4 Titel (optional)",
+  "settings.feed5.label": "Feed 5 URL",
+  "settings.title5.label": "Feed 5 Titel (optional)",
+  "settings.items.label": "Einträge pro Feed",
+  "settings.refresh.label": "Aktualisierungsintervall (Minuten)"
+}
