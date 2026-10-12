@@ -76,3 +76,7 @@ show_events_card = false
 
 [weather]
 enabled = false
+
+# Clock widget: open the launcher (Start screen) on left click
+[widget.clock.actions]
+left = "panel-toggle launcher"
