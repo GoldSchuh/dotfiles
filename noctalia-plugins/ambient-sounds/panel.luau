@@ -9,12 +9,10 @@ end
 
 local function soundCard(sound)
     return ui.column({ gap = 12, padding = 16, flexGrow = 1, minWidth = 240,
-        fill = sound.enabled and "surface_variant/0.55" or "surface_variant/0.30", radius = 16,
-        border = sound.enabled and "primary/0.65" or "outline/0.55", borderWidth = 1.5 }, {
+        fill = sound.enabled and "primary/0.14" or "surface_variant/0.25", radius = 16,
+        border = sound.enabled and "primary/0.7" or "outline/0.45", borderWidth = 1.5 }, {
         ui.row({ gap = 12, align = "center" }, {
-            ui.row({ width = 46, height = 46, radius = 12, border = "outline/0.25", borderWidth = 1, align = "center", justify = "center" }, {
-                soundIcon(sound),
-            }),
+            soundIcon(sound),
             ui.column({ gap = 3, flexGrow = 1 }, {
                 ui.label({ text = sound.title, fontSize = 15, fontWeight = "bold" }),
                 ui.label({ text = sound.description, fontSize = 11, color = "on_surface_variant", maxLines = 2 }),
@@ -27,23 +25,17 @@ local function soundCard(sound)
                 end,
             }),
         }),
-        ui.separator({ thickness = 1, color = "outline/0.25" }),
         ui.row({ gap = 10, align = "center" }, {
-            ui.label({ text = "VOLUME", fontSize = 10, color = "on_surface_variant", width = 52 }),
+            ui.button({ glyph = "bolt", glyphSize = 14, controlSize = "sm",
+                variant = sound.amplified and "primary" or "ghost",
+                onClick = function()
+                    engine:setAmplified(sound.id, not sound.amplified)
+                    render()
+                end }),
+            ui.label({ text = "VOLUME", fontSize = 10, color = "on_surface_variant", width = 46 }),
             ui.slider({ min = 0, max = 100, step = 1, value = sound.level, controlSize = "sm", flexGrow = 1,
                 onChange = function(value) engine:setSoundVolume(sound.id, tonumber(value) or 0); render() end }),
             ui.label({ text = sound.level .. "%", fontSize = 11, color = "primary", width = 35, textAlign = "end" }),
-        }),
-        ui.button({
-            glyph = "bolt",
-            glyphSize = 14,
-            text = sound.amplified and "Amplified" or "Amplify",
-            variant = sound.amplified and "primary" or "outline",
-            controlSize = "sm",
-            onClick = function()
-                engine:setAmplified(sound.id, not sound.amplified)
-                render()
-            end,
         }),
     })
 end
